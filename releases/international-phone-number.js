@@ -50,6 +50,10 @@
         if (!options.utilsScript) {
           element.intlTelInput('loadUtils', 'bower_components/intl-tel-input/lib/libphonenumber/build/utils.js');
         }
+        ctrl.$formatters.push(function(value) {
+          element.intlTelInput('setNumber', value);
+          return element.val();
+        });
         ctrl.$parsers.push(function(value) {
           if (!value) {
             return value;
