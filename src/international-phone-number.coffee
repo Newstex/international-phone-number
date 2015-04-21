@@ -90,7 +90,7 @@ angular.module("internationalPhoneNumber", []).directive 'internationalPhoneNumb
           ctrl.$setValidity 'international-phone-number', validity
         else
           value = ''
-          delete ctrl.$error['international-phone-number']
+          ctrl.$setValidity 'international-phone-number', true
         value
 
 
