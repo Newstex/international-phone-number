@@ -77,11 +77,23 @@ angular.module("internationalPhoneNumber", []).directive 'internationalPhoneNumb
       return value if !value
       value.replace(/[^\d]/g, '')
 
-    ctrl.$validators.internationalPhoneNumber = (value) ->
-      if !value
-        return value
-      else
-        return element.intlTelInput("isValidNumber")
+    if ctrl.$validators
+      ctrl.$validators.internationalPhoneNumber = (value) ->
+        if !value
+          return value
+        else
+          return element.intlTelInput("isValidNumber")
+    else
+      ctrl.$parsers.push (value) ->
+        if value
+          validity = element.intlTelInput("isValidNumber")
+          ctrl.$setValidity 'international-phone-number', validity
+          ctrl.$setValidity '', validity
+        else
+          value = ''
+          delete ctrl.$error['international-phone-number']
+        value
+
 
 
     element.on 'blur keyup change', (event) ->
